@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.app.movies.list"
-        minSdk = 28
+        minSdk = 27
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
