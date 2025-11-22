@@ -60,27 +60,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeUiState() {
-        lifecycleScope.launch {
-            viewModel.moviesState.collect { state ->
-                when (state) {
-                    is UiState.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.tvError.visibility = View.GONE
-                        binding.btnRetry.visibility = View.GONE
-                        binding.rvMovies.visibility = View.GONE
-                    }
-                    is UiState.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.tvError.visibility = View.VISIBLE
-                        binding.tvError.text = state.message ?: getString(R.string.error)
-                        binding.btnRetry.visibility = View.VISIBLE
-                        binding.rvMovies.visibility = View.GONE
-                    }
-                    is UiState.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.tvError.visibility = View.GONE
-                        binding.btnRetry.visibility = View.GONE
-                        binding.rvMovies.visibility = View.VISIBLE
+        with(binding){
+            lifecycleScope.launch {
+                viewModel.moviesState.collect { state ->
+                    when (state) {
+                        is UiState.Loading -> {
+                            progressBar.visibility = View.VISIBLE
+                            tvError.visibility = View.GONE
+                            btnRetry.visibility = View.GONE
+                            rvMovies.visibility = View.GONE
+                        }
+                        is UiState.Error -> {
+                            progressBar.visibility = View.GONE
+                            tvError.visibility = View.VISIBLE
+                            tvError.text = state.message ?: getString(R.string.error)
+                            btnRetry.visibility = View.VISIBLE
+                            rvMovies.visibility = View.GONE
+                        }
+                        is UiState.Success -> {
+                            progressBar.visibility = View.GONE
+                            tvError.visibility = View.GONE
+                            btnRetry.visibility = View.GONE
+                            rvMovies.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
@@ -93,9 +95,8 @@ class MainActivity : AppCompatActivity() {
 
                 moviesAdapter.submitList(movies)
 
-                if (movies.isNullOrEmpty()) {
+                if (movies.isEmpty()) {
                     binding.tvNoData.visibility = View.VISIBLE
-                    binding.rvMovies.visibility = View.GONE
                 } else {
                     binding.tvNoData.visibility = View.GONE
                     binding.rvMovies.visibility = View.VISIBLE
