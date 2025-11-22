@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.movies.list.ui.DetailsActivity
 import com.app.movies.list.MoviesAdapter
 import com.app.movies.list.R
 import com.app.movies.list.databinding.ActivityMainBinding
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeUiState() {
-        with(binding){
+        with(binding) {
             lifecycleScope.launch {
                 viewModel.moviesState.collect { state ->
                     when (state) {
@@ -70,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                             btnRetry.visibility = View.GONE
                             rvMovies.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             progressBar.visibility = View.GONE
                             tvError.visibility = View.VISIBLE
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                             btnRetry.visibility = View.VISIBLE
                             rvMovies.visibility = View.GONE
                         }
+
                         is UiState.Success -> {
                             progressBar.visibility = View.GONE
                             tvError.visibility = View.GONE
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeFavoriteIds() {
         lifecycleScope.launch {
             viewModel.favoriteIds().collect { favorites ->
-                moviesAdapter.submitFavorites (favorites)
+                moviesAdapter.submitFavorites(favorites)
             }
         }
     }

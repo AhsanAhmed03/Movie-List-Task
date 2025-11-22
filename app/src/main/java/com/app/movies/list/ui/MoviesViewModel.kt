@@ -1,6 +1,5 @@
 package com.app.movies.list.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.movies.list.model.Movie
@@ -24,19 +23,15 @@ class MoviesViewModel @Inject constructor(
     private val _moviesState = MutableStateFlow<UiState<List<Movie>>>(UiState.Loading)
     val moviesState: StateFlow<UiState<List<Movie>>> = _moviesState.asStateFlow()
 
-    // Observes favorite movie IDs stored in Room
     private val favoriteIdsFlow = repository.observeFavorites()
         .map { entities -> entities.map { it.id }.toSet() }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptySet())
 
-    // Holds the latest fetched movie list
     private val allMoviesFlow = MutableStateFlow<List<Movie>>(emptyList())
 
     // Holds the selected filter state
     private val _filterState = MutableStateFlow(FilterType.ALL)
-    val filterState: StateFlow<FilterType> = _filterState.asStateFlow()
 
-    // Fetch movies from the repository and update UI state
     fun loadMovies() {
         viewModelScope.launch {
             repository.getMovies().collect { state ->
@@ -48,7 +43,6 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    // Exposes filtered movie list based on user selection
     val filteredMovies: StateFlow<List<Movie>> = combine(
         allMoviesFlow, favoriteIdsFlow, _filterState
     ) { movies, favoriteIds, filter ->
@@ -58,12 +52,10 @@ class MoviesViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    // Update filter selection
     fun setFilter(type: FilterType) {
         _filterState.value = type
     }
 
-    // Handles favorite toggle for a movie
     fun toggleFavorite(movieId: String, isCurrentlyFavorite: Boolean) {
         viewModelScope.launch {
             if (isCurrentlyFavorite) {
@@ -74,7 +66,6 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    // Expose favorite IDs to UI
     fun favoriteIds(): StateFlow<Set<String>> = favoriteIdsFlow
 
 }

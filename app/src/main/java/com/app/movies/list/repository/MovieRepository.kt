@@ -21,13 +21,14 @@ class MovieRepository @Inject constructor(
         try {
             val movies = api.getFilms()
             emit(UiState.Success(movies))
-            Log.d("apiCallingLogs","Data from api: $movies")
+            Log.d("apiCallingLogs", "Data from api: $movies")
         } catch (e: Exception) {
-            Log.e("apiCallingLogs","Error: $e")
+            Log.e("apiCallingLogs", "Error: $e")
 
             emit(UiState.Error(e.message ?: "Unknown error"))
         }
     }
+
     fun observeFavorites(): Flow<List<FavoriteEntity>> = dao.observeAllFavorites()
 
     suspend fun addFavorite(movieId: String) {

@@ -19,7 +19,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        setProperty("archivesBaseName", "App Name V$versionCode($versionName)")
+        setProperty("archivesBaseName", "Movie Task V$versionCode($versionName)")
 
     }
 
