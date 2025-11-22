@@ -90,10 +90,20 @@ class MainActivity : AppCompatActivity() {
     private fun observeMovieList() {
         lifecycleScope.launch {
             viewModel.filteredMovies.collect { movies ->
+
                 moviesAdapter.submitList(movies)
+
+                if (movies.isNullOrEmpty()) {
+                    binding.tvNoData.visibility = View.VISIBLE
+                    binding.rvMovies.visibility = View.GONE
+                } else {
+                    binding.tvNoData.visibility = View.GONE
+                    binding.rvMovies.visibility = View.VISIBLE
+                }
             }
         }
     }
+
 
     private fun observeFavoriteIds() {
         lifecycleScope.launch {

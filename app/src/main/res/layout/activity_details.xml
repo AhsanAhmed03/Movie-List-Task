@@ -1,40 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="0dp"
+    android:background="#F5F5F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <!-- Poster -->
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgPosterFull"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"/>
+            android:layout_height="320dp"
+            android:elevation="6dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/imageRound10"
+            android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_marginTop="12dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
+        <!-- Card -->
+        <LinearLayout
+            android:layout_marginTop="-24dp"
+            android:background="@android:color/white"
+            android:elevation="6dp"
+            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipToOutline="true">
 
-        <TextView
-            android:id="@+id/tvYear"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_marginTop="12dp"
+                android:textStyle="bold"
+                android:textColor="#222222"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_marginTop="12dp"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_marginTop="6dp"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DDDDDD" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_marginTop="12dp"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:lineSpacingExtra="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

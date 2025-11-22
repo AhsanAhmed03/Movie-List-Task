@@ -72,7 +72,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
 
-
     // Glide
     implementation(libs.glide)
 
