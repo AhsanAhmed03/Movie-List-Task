@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android") version "2.57.2" apply true
 }
 
 android {
@@ -16,7 +19,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "App Name V$versionCode($versionName)")
+
     }
 
     buildTypes {
@@ -35,6 +39,17 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    kapt {
+        correctErrorTypes = true
+    }
+    hilt {
+        enableAggregatingTask = false
+    }
 }
 
 dependencies {
@@ -43,7 +58,25 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+
+
+    // Glide
+    implementation(libs.glide)
+
+    //Viewmodel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
 }
